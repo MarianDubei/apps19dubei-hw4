@@ -38,6 +38,9 @@ public class PrefixMatches {
 
     public boolean contains(String word) {
 
+        if (word.replaceAll("[^a-zA-Z\\s]", "").length() != word.length()) {
+            return false;
+        }
         return trie.contains(word.toLowerCase());
 
     }
