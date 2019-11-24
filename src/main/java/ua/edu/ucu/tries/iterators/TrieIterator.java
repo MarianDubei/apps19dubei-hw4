@@ -34,7 +34,6 @@ public class TrieIterator implements Iterator<String> {
         queue.enqueue(new Object[]{startNode, ""});
 
         int words_idx = 0;
-        int i;
         while (!queue.isEmpty()) {
             curTuple = (Object[]) queue.dequeue();
             curNode = (Node) curTuple[0];
@@ -55,7 +54,7 @@ public class TrieIterator implements Iterator<String> {
     }
 
     @Override
-    public boolean hasNext() { return (currentIndex < trie.size()); }
+    public boolean hasNext() { return currentIndex < trie.size(); }
 
     @Override
     public String next() throws NoSuchElementException {

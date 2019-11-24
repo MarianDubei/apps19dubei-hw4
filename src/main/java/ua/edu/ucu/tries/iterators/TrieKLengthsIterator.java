@@ -8,7 +8,6 @@ import java.util.NoSuchElementException;
 public class TrieKLengthsIterator implements Iterator<String> {
 
     private String[] wordsWithKLengths;
-    private int k;
     private int words_idx;
     private int currentIndex;
 
