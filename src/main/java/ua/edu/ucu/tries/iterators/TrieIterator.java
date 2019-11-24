@@ -21,9 +21,6 @@ public class TrieIterator implements Iterator<String> {
 
     private String[] bfs(String pref, int size) {
 
-        if (pref.length() < 2) {
-            return new String[0];
-        }
         String[] words = new String[size];
         Queue queue = new Queue();
         Node curNode;

@@ -60,6 +60,7 @@ public class PrefixMatchesITTest {
         pm.load("abcdefg abcdefgh");
         assertTrue(pm.contains("abcdefg"));
         pm.load("abc123!@$^*%^&*fed");
+        assertFalse(pm.contains("abc123!@$^*%^&*fed"));
         assertTrue(pm.contains("abcfed"));
         pm.load("a");
         assertFalse(pm.contains("a"));

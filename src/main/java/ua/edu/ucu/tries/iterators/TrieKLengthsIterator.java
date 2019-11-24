@@ -1,52 +1,55 @@
 package ua.edu.ucu.tries.iterators;
 
+import ua.edu.ucu.tries.RWayTrie;
+
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class TrieKLengthsIterator implements Iterator<String> {
 
-    private Iterator<String> iter;
+    private String[] wordsWithKLengths;
     private int k;
-    private String next;
-    private int sizeCount = 0;
-    private int maxSize = -1;
+    private int words_idx;
+    private int currentIndex;
 
-
-    public TrieKLengthsIterator(Iterator<String> inputIter, int inputK) {
-
-        iter = inputIter;
-        k = inputK;
-        getNext();
-
+    public TrieKLengthsIterator(String pref, RWayTrie inputTrie, int k) {
+        words_idx = 0;
+        wordsWithKLengths = sliceWords(inputTrie.wordsWithPrefix(pref), k, inputTrie.size());
     }
 
-    private void getNext() {
+    private String[] sliceWords(Iterable<String> iter, int k, int size) {
 
-        next = iter.next();
-        if (!iter.hasNext() || (sizeCount == k && next.length() > maxSize)) {
-            next = null;
-            return;
-        }
+        String[] kLengthsWords = new String[size];
+        int lenCount = 0;
+        int prev_len = 0;
 
-        if (next.length() > maxSize) {
-            sizeCount++;
-            maxSize = next.length();
+        for (String str: iter){
+            if (str.length() > prev_len) {
+                lenCount += 1;
+            }
+            prev_len = str.length();
+            if (lenCount > k){
+                return kLengthsWords;
+            }
+            kLengthsWords[words_idx] = str;
+            words_idx += 1;
         }
+        return kLengthsWords;
 
     }
 
     @Override
-    public boolean hasNext() { return next != null; }
+    public boolean hasNext() { return currentIndex < words_idx; }
 
     @Override
-    public String next() {
+    public String next() throws NoSuchElementException {
 
-        String str = next;
-        getNext();
-        return str;
+        currentIndex += 1;
+        return wordsWithKLengths[currentIndex - 1];
 
     }
 
-    public static Iterable<String> getWords(Iterable<String> iter, int k) {
-        return () -> new TrieKLengthsIterator(iter.iterator(), k);
+    public static Iterable<String> getWords(String pref, RWayTrie inputTrie, int k) {
+        return () -> new TrieKLengthsIterator(pref, inputTrie, k);
     }
 }
