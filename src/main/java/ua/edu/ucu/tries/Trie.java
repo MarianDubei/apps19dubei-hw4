@@ -2,18 +2,18 @@ package ua.edu.ucu.tries;
 
 public interface Trie {
 
-    public void add(Tuple word);
+    void add(Tuple word);
 
-    public boolean contains(String word);
+    boolean contains(String word);
 
-    public boolean delete(String word);
+    boolean delete(String word);
 
-    public Iterable<String> words();
+    Iterable<String> words();
 
-    public Iterable<String> wordsWithPrefix(String pref);
+    Iterable<String> wordsWithPrefix(String pref);
 
-    public Iterable<String> wordsWithPrefixKLengths(String s, int k);
+    Iterable<String> wordsWithPrefixKLengths(String s, int k);
 
-    public int size();
+    int size();
 
 }

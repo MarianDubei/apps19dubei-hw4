@@ -7,8 +7,8 @@ public class TrieKLengthsIterator implements Iterator<String> {
     private Iterator<String> iter;
     private int k;
     private String next;
-    private int sizes_num = 0;
-    private int max_size = -1;
+    private int sizeCount = 0;
+    private int maxSize = -1;
 
 
     public TrieKLengthsIterator(Iterator<String> inputIter, int inputK) {
@@ -22,14 +22,14 @@ public class TrieKLengthsIterator implements Iterator<String> {
     private void getNext() {
 
         next = iter.next();
-        if (!iter.hasNext() || (sizes_num == k && next.length() > max_size)) {
+        if (!iter.hasNext() || (sizeCount == k && next.length() > maxSize)) {
             next = null;
             return;
         }
 
-        if (next.length() > max_size) {
-            sizes_num++;
-            max_size = next.length();
+        if (next.length() > maxSize) {
+            sizeCount++;
+            maxSize = next.length();
         }
 
     }

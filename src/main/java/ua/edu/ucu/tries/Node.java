@@ -4,7 +4,7 @@ public class Node{
 
         private char value;
         private boolean endFlag;
-        private Node[] next = new Node[26];
+        public Node[] next = new Node[26];
         private int weight;
 
         public Node(char inputValue) {

@@ -25,7 +25,7 @@ public class PrefixMatches {
         for (int i = 0; i < strings.length; i++){
             splitted = strings[i].split("\\s+");
             for (String str: splitted) {
-                str = str.toLowerCase().replaceAll("[^a-z\\s]", "");
+                str = str.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
                 if (str.length() > 2) {
                     trie.add(new Tuple(str, str.length()));
                     cnt += 1;

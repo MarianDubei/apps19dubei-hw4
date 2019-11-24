@@ -1,6 +1,8 @@
 package ua.edu.ucu.tries.iterators;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import ua.edu.ucu.queue.Queue;
 import ua.edu.ucu.tries.Node;
 import ua.edu.ucu.tries.RWayTrie;
@@ -29,7 +31,7 @@ public class TrieIterator implements Iterator<String> {
 
         Node startNode = trie.getEndofWord(pref);
         if (startNode == null) {
-            return null;
+            return new String[0];
         }
 
         queue.enqueue(new Object[]{startNode, ""});
@@ -59,7 +61,7 @@ public class TrieIterator implements Iterator<String> {
     public boolean hasNext() { return (currentIndex < trie.size()); }
 
     @Override
-    public String next() {
+    public String next() throws NoSuchElementException {
 
         currentIndex += 1;
         return wordsWithPref[currentIndex - 1];
