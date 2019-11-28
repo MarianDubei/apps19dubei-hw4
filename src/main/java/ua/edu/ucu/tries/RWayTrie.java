@@ -89,16 +89,5 @@ public class RWayTrie implements Trie {
         return trieSize;
 
     }
-
-
-    public static void main(String[] args) {
-        RWayTrie tr = new RWayTrie();
-        tr.add(new Tuple("rofl", 4));
-        tr.add(new Tuple("roflan", 6));
-        tr.add(new Tuple("rofla", 11));
-        Iterable<String> itr = tr.wordsWithPrefixKLengths("rof", 2);
-        for (String i: itr) {
-            System.out.println(i);
-        }
-    }
+    
 }
