@@ -11,19 +11,19 @@ public class NodeTest {
 
     @Before
     public void init() {
-        node = new Node('a');
-        node.setNext('b', new Node('b'));
+        node = new Node("a");
+        node.setNext('b', new Node("ab"));
     }
 
     @Test
     public void testValues() {
-        node.setValue('c');
-        assertEquals('c', node.getValue());
+        node.setWord("abc");
+        assertEquals("abc", node.getWord());
     }
 
     @Test
     public void testNext() {
-        assertEquals('b', node.getNext('b').getValue());
+        assertEquals("ab", node.getNext('b').getWord());
         assertEquals(null, node.getNext('d'));
     }
 
