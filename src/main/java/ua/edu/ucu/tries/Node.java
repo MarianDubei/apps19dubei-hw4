@@ -1,20 +1,22 @@
 package ua.edu.ucu.tries;
 
+import java.util.HashMap;
+
 public class Node{
 
-        private char value;
+        private String word;
         private boolean endFlag;
-        public Node[] next = new Node[26];
+        HashMap<Character, Node> next = new HashMap<>();
         private int weight;
 
-        public Node(char inputValue) {
-            value = inputValue;
+        public Node(String inputWord) {
+            word = inputWord;
             endFlag = false;
             weight = -1;
         }
 
         public Node() {
-            value = ' ';
+            word = " ";
             endFlag = false;
             weight = -1;
         }
@@ -27,27 +29,27 @@ public class Node{
             return endFlag;
         }
 
-        public char getValue() {
-            return value;
+        public String getWord() {
+            return word;
         }
 
-        public Node[] getNext() {
+        public HashMap<Character, Node> getNext() {
             return next;
         }
 
         public Node getNext(char inputChar) {
-            return next[(int)inputChar - (int)'a'];
+            return next.get(inputChar);
         }
 
         public void setFlag(boolean inputFlag) {
             endFlag = inputFlag;
         }
 
-        public void setValue(char inputValue) {
-            value = inputValue;
+        public void setWord(String inputWord) {
+            word = inputWord;
         }
 
         public void setNext(char inputChar, Node node) {
-            next[(int)inputChar - (int)'a'] = node;
+            next.put(inputChar, node);
         }
     }

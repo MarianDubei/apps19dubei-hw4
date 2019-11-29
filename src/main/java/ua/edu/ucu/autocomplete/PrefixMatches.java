@@ -3,10 +3,7 @@ package ua.edu.ucu.autocomplete;
 import ua.edu.ucu.tries.Trie;
 import ua.edu.ucu.tries.Tuple;
 
-/**
- *
- * @author andrii
- */
+
 public class PrefixMatches {
 
     private Trie trie;
@@ -19,12 +16,12 @@ public class PrefixMatches {
 
     public int load(String... strings) {
 
-        String[] splitted;
+        String[] splitStrings;
         int cnt = 0;
 
         for (int i = 0; i < strings.length; i++){
-            splitted = strings[i].split("\\s+");
-            for (String str: splitted) {
+            splitStrings = strings[i].split("\\s+");
+            for (String str: splitStrings) {
                 str = str.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
                 if (str.length() > 2) {
                     trie.add(new Tuple(str, str.length()));
@@ -71,4 +68,5 @@ public class PrefixMatches {
         return trie.size();
 
     }
+
 }

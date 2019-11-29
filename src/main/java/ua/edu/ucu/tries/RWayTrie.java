@@ -17,7 +17,9 @@ public class RWayTrie implements Trie {
     }
 
     public Node getEndofWord(String s) {
+
         Node curNode = root;
+
         for (char c: s.toCharArray()) {
             if (curNode.getNext(c) != null) {
                 curNode = curNode.getNext(c);
@@ -26,6 +28,7 @@ public class RWayTrie implements Trie {
             }
         }
         return curNode;
+
     }
 
     @Override
@@ -33,13 +36,16 @@ public class RWayTrie implements Trie {
 
         trieSize += 1;
         char c;
-        String word = t.term;
+        String inputWord = t.term;
+        String fullWord = "";
         Node curNode = root;
 
-        for (int i = 0; i < word.length(); i++){
-            c = word.charAt(i);
+        for (int i = 0; i < inputWord.length(); i++){
+            c = inputWord.charAt(i);
+            fullWord += c;
+
             if (curNode.getNext(c) == null){
-                curNode.setNext(c, new Node(c));
+                curNode.setNext(c, new Node(fullWord));
                 curNode = curNode.getNext(c);
             } else {
                 curNode = curNode.getNext(c);
@@ -60,6 +66,7 @@ public class RWayTrie implements Trie {
 
     @Override
     public boolean delete(String word) {
+
         Node node = getEndofWord(word);
         if (node != null && node.getFlag()){
             trieSize -= 1;
@@ -74,20 +81,19 @@ public class RWayTrie implements Trie {
 
     @Override
     public Iterable<String> wordsWithPrefix(String s) {
-        return TrieIterator.getWords(s, this);
+
+        return TrieIterator.getWords(getEndofWord(s));
 
     }
 
     @Override
     public Iterable<String> wordsWithPrefixKLengths(String s, int k){
-        return TrieKLengthsIterator.getWords(s, this,k);
+
+        return TrieKLengthsIterator.getWords(wordsWithPrefix(s), k);
+
     }
 
     @Override
-    public int size() {
+    public int size() { return trieSize; }
 
-        return trieSize;
-
-    }
-    
 }

@@ -1,72 +1,48 @@
 package ua.edu.ucu.tries.iterators;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import ua.edu.ucu.queue.Queue;
 import ua.edu.ucu.tries.Node;
-import ua.edu.ucu.tries.RWayTrie;
 
 public class TrieIterator implements Iterator<String> {
 
-    private String[] wordsWithPref;
-    private int currentIndex;
-    private RWayTrie trie;
+    private Queue queue;
 
-    public TrieIterator(String pref, RWayTrie inputTrie) {
-        trie = inputTrie;
-        wordsWithPref = bfs(pref, inputTrie.size());
-        currentIndex = 0;
+    public TrieIterator(Node inputNode) {
+
+        queue = new Queue();
+        queue.enqueue(inputNode);
+
     }
 
-    private String[] bfs(String pref, int size) {
+    @Override
+    public boolean hasNext() { return (!queue.isEmpty()); }
 
-        String[] words = new String[size];
-        Queue queue = new Queue();
-        Node curNode;
-        Object[] curTuple;
+    @Override
+    public String next() {
 
-        Node startNode = trie.getEndofWord(pref);
-        if (startNode == null) {
-            return new String[0];
-        }
-
-        queue.enqueue(new Object[]{startNode, ""});
-
-        int words_idx = 0;
         while (!queue.isEmpty()) {
-            curTuple = (Object[]) queue.dequeue();
-            curNode = (Node) curTuple[0];
+            Node curNode = (Node) queue.dequeue();
 
-            for (Node child: curNode.getNext()) {
-                if (child != null) {
-                    queue.enqueue(new Object[]{child, (String) curTuple[1] + child.getValue()});
+            for (char key: curNode.getNext().keySet()) {
+                if (curNode.getNext(key) != null) {
+                    queue.enqueue(curNode.getNext(key));
                 }
             }
 
             if (curNode.getFlag()) {
-                words[words_idx] = pref + (String) curTuple[1];
-                words_idx += 1;
+                return curNode.getWord();
             }
         }
 
-        return words;
-    }
-
-    @Override
-    public boolean hasNext() { return currentIndex < trie.size(); }
-
-    @Override
-    public String next() throws NoSuchElementException {
-
-        currentIndex += 1;
-        return wordsWithPref[currentIndex - 1];
+        return null;
 
     }
 
-    public static Iterable<String> getWords(String pref, RWayTrie inputTrie) {
+    public static Iterable<String> getWords(Node inputNode) {
 
-        return () -> new TrieIterator(pref, inputTrie);
+        return () -> new TrieIterator(inputNode);
 
     }
 
