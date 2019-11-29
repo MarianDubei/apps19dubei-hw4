@@ -4,19 +4,21 @@ import java.util.HashMap;
 
 public class Node{
 
-        private String word;
+        private char value;
         private boolean endFlag;
+        private Node parent;
         HashMap<Character, Node> next = new HashMap<>();
         private int weight;
 
-        public Node(String inputWord) {
-            word = inputWord;
+        public Node(char inputValue, Node previous) {
+            value = inputValue;
+            parent = previous;
             endFlag = false;
             weight = -1;
         }
 
         public Node() {
-            word = " ";
+            value = ' ';
             endFlag = false;
             weight = -1;
         }
@@ -29,8 +31,19 @@ public class Node{
             return endFlag;
         }
 
+        public char getValue() {
+            return value;
+        }
+
         public String getWord() {
-            return word;
+
+            StringBuilder word = new StringBuilder(15);
+
+            for (Node curNode = this; curNode.parent != null; curNode = curNode.parent) {
+                word.append(curNode.getValue());
+            }
+
+            return word.reverse().toString();
         }
 
         public HashMap<Character, Node> getNext() {
@@ -43,10 +56,6 @@ public class Node{
 
         public void setFlag(boolean inputFlag) {
             endFlag = inputFlag;
-        }
-
-        public void setWord(String inputWord) {
-            word = inputWord;
         }
 
         public void setNext(char inputChar, Node node) {

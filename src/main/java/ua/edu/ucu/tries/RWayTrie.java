@@ -34,18 +34,15 @@ public class RWayTrie implements Trie {
     @Override
     public void add(Tuple t) {
 
+        if (contains(t.term)){return;}
         trieSize += 1;
         char c;
-        String inputWord = t.term;
-        String fullWord = "";
         Node curNode = root;
 
-        for (int i = 0; i < inputWord.length(); i++){
-            c = inputWord.charAt(i);
-            fullWord += c;
-
+        for (int i = 0; i < t.term.length(); i++){
+            c = t.term.charAt(i);
             if (curNode.getNext(c) == null){
-                curNode.setNext(c, new Node(fullWord));
+                curNode.setNext(c, new Node(c, curNode));
                 curNode = curNode.getNext(c);
             } else {
                 curNode = curNode.getNext(c);
