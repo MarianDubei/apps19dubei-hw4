@@ -11,20 +11,8 @@ public class NodeTest {
 
     @Before
     public void init() {
-        node = new Node("a");
-        node.setNext('b', new Node("ab"));
-    }
-
-    @Test
-    public void testValues() {
-        node.setWord("abc");
-        assertEquals("abc", node.getWord());
-    }
-
-    @Test
-    public void testNext() {
-        assertEquals("ab", node.getNext('b').getWord());
-        assertEquals(null, node.getNext('d'));
+        node = new Node('a', null);
+        node.setNext('b', new Node('b', node));
     }
 
     @Test
